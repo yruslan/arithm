@@ -33,7 +33,7 @@ CRng rng1;
 
 int goal = 40;
 int penalty = 3;
-int maxNum = 125;
+int maxNum = 200;
 
 struct Expression
 {
@@ -274,7 +274,7 @@ int main (int argc, char **argv)
 	else
 	{
 		textcolor(CN_NORMAL, CN_RED | CN_BRIGHT);
-		printf("Musis opekovak jeste jednou!\n");
+		printf("Musis opakovat jeste jednou!\n");
 		textcolor();
 	}
 	char s[255];

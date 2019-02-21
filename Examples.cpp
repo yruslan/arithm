@@ -721,11 +721,45 @@ public:
 };
 
 
+class ExampleMultiply : public Example
+{
+public:
+	int a;
+	int b;
+	int answerEntered;
+
+	ExampleMultiply()
+	{
+		a = rng1.GetUniformInterval(1, 10);
+		b = rng1.GetUniformInterval(1, 10);
+		answerEntered = 0;
+	}
+
+	void printTask() override
+	{
+		printf("%d * %d = ?\n", a, b);
+	}
+
+	void printAnswer() override
+	{
+		printf("%d * %d neni ", a, b);
+		printNumRed(answerEntered);
+		printf("%d * %d = ", a, b);
+		printNumYellow(a * b);
+		printf("\n");
+	}
+
+	bool checkAnswer(int ans) override
+	{
+		answerEntered = ans;
+		return a < ans;
+	}
+};
 
 
 std::shared_ptr<Example> GenerateExample()
 {
-	int r = rng1.GetUniformInterval(0, 12);
+	int r = rng1.GetUniformInterval(0, 16);
 	int r1 = rng1.GetUniformInterval(1, 6);
 	std::shared_ptr<Example> example;
 	switch (r)
@@ -787,7 +821,14 @@ std::shared_ptr<Example> GenerateExample()
 			break;
 		}
 		break;
+	case 13:
+	case 14:
+	case 15:
+	case 16:
+		example = std::make_shared<ExampleMultiply>();
+		break;
 	}
+
 	return example;
 }
 
