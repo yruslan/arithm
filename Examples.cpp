@@ -744,7 +744,7 @@ public:
 	{
 		printf("%d * %d neni ", a, b);
 		printNumRed(answerEntered);
-		printf("%d * %d = ", a, b);
+		printf(", %d * %d = ", a, b);
 		printNumYellow(a * b);
 		printf("\n");
 	}
@@ -752,14 +752,187 @@ public:
 	bool checkAnswer(int ans) override
 	{
 		answerEntered = ans;
-		return a < ans;
+		return ans == a*b;
 	}
 };
 
+class ExampleMultiplySum1 : public Example
+{
+public:
+	int a;
+	int b;
+	int c;
+	int answerEntered;
+
+	ExampleMultiplySum1()
+	{
+		while (true)
+		{
+			a = rng1.GetUniformInterval(1, 10);
+			b = rng1.GetUniformInterval(1, 10);
+			c = rng1.GetUniformInterval(1, maxNum);
+
+			if (a * b + c <= maxNum)
+				break;
+		}
+
+		answerEntered = 0;
+	}
+
+	void printTask() override
+	{
+		printf("%d * %d + %d = ?\n", a, b, c);
+	}
+
+	void printAnswer() override
+	{
+		printf("%d * %d + %d neni ", a, b, c);
+		printNumRed(answerEntered);
+		printf(", %d * %d + %d = ", a, b, c);
+		printNumYellow(a * b + c);
+		printf("\n");
+	}
+
+	bool checkAnswer(int ans) override
+	{
+		answerEntered = ans;
+		return ans == a*b+c;
+	}
+};
+
+class ExampleMultiplySum2 : public Example
+{
+public:
+	int a;
+	int b;
+	int c;
+	int answerEntered;
+
+	ExampleMultiplySum2()
+	{
+		while (true)
+		{
+			a = rng1.GetUniformInterval(1, 10);
+			b = rng1.GetUniformInterval(1, 10);
+			c = rng1.GetUniformInterval(1, maxNum);
+
+			if (a * b + c <= maxNum)
+				break;
+		}
+	}
+
+	void printTask() override
+	{
+		printf("%d + %d * %d = ?\n", c, a, b);
+	}
+
+	void printAnswer() override
+	{
+		printf("%d + %d * %d neni ", c, a, b);
+		printNumRed(answerEntered);
+		printf(", %d + %d * %d = ", c, a, b);
+		printNumYellow(a * b + c);
+		printf("\n");
+	}
+
+	bool checkAnswer(int ans) override
+	{
+		answerEntered = ans;
+		return ans == a*b + c;
+	}
+};
+
+class ExampleMultiplySub1 : public Example
+{
+public:
+	int a;
+	int b;
+	int c;
+	int answerEntered;
+
+	ExampleMultiplySub1()
+	{
+		while (true)
+		{
+			a = rng1.GetUniformInterval(1, 10);
+			b = rng1.GetUniformInterval(1, 10);
+			c = rng1.GetUniformInterval(1, maxNum);
+
+			if (a * b - c >= 0)
+				break;
+		}
+
+		answerEntered = 0;
+	}
+
+	void printTask() override
+	{
+		printf("%d * %d - %d = ?\n", a, b, c);
+	}
+
+	void printAnswer() override
+	{
+		printf("%d * %d - %d neni ", a, b, c);
+		printNumRed(answerEntered);
+		printf(", %d * %d - %d = ", a, b, c);
+		printNumYellow(a * b - c);
+		printf("\n");
+	}
+
+	bool checkAnswer(int ans) override
+	{
+		answerEntered = ans;
+		return ans == a*b - c;
+	}
+};
+
+class ExampleMultiplySub2 : public Example
+{
+public:
+	int a;
+	int b;
+	int c;
+	int answerEntered;
+
+	ExampleMultiplySub2()
+	{
+		while (true)
+		{
+			a = rng1.GetUniformInterval(1, 10);
+			b = rng1.GetUniformInterval(1, 10);
+			c = rng1.GetUniformInterval(1, maxNum);
+
+			if (c - a * b >= 0)
+				break;
+		}
+
+		answerEntered = 0;
+	}
+
+	void printTask() override
+	{
+		printf("%d - %d * %d = ?\n", c, a, b);
+	}
+
+	void printAnswer() override
+	{
+		printf("%d - %d * %d neni ", c, a, b);
+		printNumRed(answerEntered);
+		printf(", %d - %d * %d = ", c, a, b);
+		printNumYellow(c - a * b);
+		printf("\n");
+	}
+
+	bool checkAnswer(int ans) override
+	{
+		answerEntered = ans;
+		return ans == c - a*b;
+	}
+};
 
 std::shared_ptr<Example> GenerateExample()
 {
-	int r = rng1.GetUniformInterval(0, 16);
+	int r = rng1.GetUniformInterval(0, 19);
 	int r1 = rng1.GetUniformInterval(1, 6);
 	std::shared_ptr<Example> example;
 	switch (r)
@@ -824,8 +997,19 @@ std::shared_ptr<Example> GenerateExample()
 	case 13:
 	case 14:
 	case 15:
-	case 16:
 		example = std::make_shared<ExampleMultiply>();
+		break;
+	case 16:
+		example = std::make_shared<ExampleMultiplySum1>();
+		break;
+	case 17:
+		example = std::make_shared<ExampleMultiplySum2>();
+		break;
+	case 18:
+		example = std::make_shared<ExampleMultiplySub1>();
+		break;
+	case 19:
+		example = std::make_shared<ExampleMultiplySub2>();
 		break;
 	}
 

@@ -31,9 +31,9 @@ using namespace std;
 
 CRng rng1;
 
-int goal = 40;
+int goal = 20;
 int penalty = 3;
-int maxNum = 200;
+int maxNum = 250;
 
 struct Expression
 {
