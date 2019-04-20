@@ -930,9 +930,219 @@ public:
 	}
 };
 
+
+class ExampleDivide : public Example
+{
+public:
+	int a;
+	int b;
+	int answerEntered;
+
+	ExampleDivide()
+	{
+		a = rng1.GetUniformInterval(1, 10);
+		b = rng1.GetUniformInterval(1, 10);
+		answerEntered = 0;
+	}
+
+	void printTask() override
+	{
+		printf("%d / %d = ?\n", a * b, a);
+	}
+
+	void printAnswer() override
+	{
+		printf("%d / %d neni ", a * b, a);
+		printNumRed(answerEntered);
+		printf(", %d / %d = ", a * b, a);
+		printNumYellow(b);
+		printf("\n");
+	}
+
+	bool checkAnswer(int ans) override
+	{
+		answerEntered = ans;
+		return ans == b;
+	}
+};
+
+class ExampleDivideSum1 : public Example
+{
+public:
+	int a;
+	int b;
+	int c;
+	int answerEntered;
+
+	ExampleDivideSum1()
+	{
+		a = rng1.GetUniformInterval(1, 10);
+		b = rng1.GetUniformInterval(1, 10);
+		while (true)
+		{
+			c = rng1.GetUniformInterval(1, maxNum);
+
+			if (b + c <= maxNum)
+				break;
+		}
+		answerEntered = 0;
+	}
+
+	void printTask() override
+	{
+		printf("%d / %d + %d = ?\n", a * b, a, c);
+	}
+
+	void printAnswer() override
+	{
+		printf("%d / %d + %d neni ", a * b, a, c);
+		printNumRed(answerEntered);
+		printf(", %d / %d + %d = ", a * b, a, c);
+		printNumYellow(b + c);
+		printf("\n");
+	}
+
+	bool checkAnswer(int ans) override
+	{
+		answerEntered = ans;
+		return ans == b + c;
+	}
+};
+
+class ExampleDivideSum2 : public Example
+{
+public:
+	int a;
+	int b;
+	int c;
+	int answerEntered;
+
+	ExampleDivideSum2()
+	{
+		a = rng1.GetUniformInterval(1, 10);
+		b = rng1.GetUniformInterval(1, 10);
+		while (true)
+		{
+			c = rng1.GetUniformInterval(1, maxNum);
+
+			if (b + c <= maxNum)
+				break;
+		}
+		answerEntered = 0;
+	}
+
+	void printTask() override
+	{
+		printf("%d + %d / %d = ?\n", c, a * b, a);
+	}
+
+	void printAnswer() override
+	{
+		printf("%d + %d / %d neni ", c, a * b, a);
+		printNumRed(answerEntered);
+		printf(", %d + %d / %d = ", c, a * b, a);
+		printNumYellow(b + c);
+		printf("\n");
+	}
+
+	bool checkAnswer(int ans) override
+	{
+		answerEntered = ans;
+		return ans == b + c;
+	}
+};
+
+class ExampleDivideSub1 : public Example
+{
+public:
+	int a;
+	int b;
+	int c;
+	int answerEntered;
+
+	ExampleDivideSub1()
+	{
+		a = rng1.GetUniformInterval(1, 10);
+		b = rng1.GetUniformInterval(1, 10);
+		while (true)
+		{
+			c = rng1.GetUniformInterval(1, maxNum);
+			if (b - c >= 0)
+				break;
+		}
+
+		answerEntered = 0;
+	}
+
+	void printTask() override
+	{
+		printf("%d / %d - %d = ?\n", a * b, a, c);
+	}
+
+	void printAnswer() override
+	{
+		printf("%d / %d - %d neni ", a * b, a, c);
+		printNumRed(answerEntered);
+		printf(", %d / %d - %d = ", a * b, a, c);
+		printNumYellow(b - c);
+		printf("\n");
+	}
+
+	bool checkAnswer(int ans) override
+	{
+		answerEntered = ans;
+		return ans == b - c;
+	}
+};
+
+class ExampleDivideSub2 : public Example
+{
+public:
+	int a;
+	int b;
+	int c;
+	int answerEntered;
+
+	ExampleDivideSub2()
+	{
+		a = rng1.GetUniformInterval(1, 10);
+		b = rng1.GetUniformInterval(1, 10);
+		while (true)
+		{
+			c = rng1.GetUniformInterval(1, maxNum);
+			if (c - b >= 0)
+				break;
+		}
+
+		answerEntered = 0;
+	}
+
+	void printTask() override
+	{
+		printf("%d - %d / %d = ?\n", c, a * b, a);
+	}
+
+	void printAnswer() override
+	{
+		printf("%d - %d / %d neni ", c, a * b, a);
+		printNumRed(answerEntered);
+		printf(", %d - %d / %d = ", c, a * b, a);
+		printNumYellow(c - b);
+		printf("\n");
+	}
+
+	bool checkAnswer(int ans) override
+	{
+		answerEntered = ans;
+		return ans == c - b;
+	}
+};
+
+
+
 std::shared_ptr<Example> GenerateExample()
 {
-	int r = rng1.GetUniformInterval(0, 19);
+	int r = rng1.GetUniformInterval(0, 24);
 	int r1 = rng1.GetUniformInterval(1, 6);
 	std::shared_ptr<Example> example;
 	switch (r)
@@ -1010,6 +1220,21 @@ std::shared_ptr<Example> GenerateExample()
 		break;
 	case 19:
 		example = std::make_shared<ExampleMultiplySub2>();
+		break;
+	case 20:
+		example = std::make_shared<ExampleDivide>();
+		break;
+	case 21:
+		example = std::make_shared<ExampleDivideSum1>();
+		break;
+	case 22:
+		example = std::make_shared<ExampleDivideSum1>();
+		break;
+	case 23:
+		example = std::make_shared<ExampleDivideSub1>();
+		break;
+	case 24:
+		example = std::make_shared<ExampleDivideSub2>();
 		break;
 	}
 
